@@ -1,0 +1,5 @@
+click==8.1.7
+faker==19.13.0
+tqdm==4.66.1
+pyperclip==1.8.2
+pyinstaller==6.15.0
