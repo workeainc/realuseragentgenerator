@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real User Agent Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-800 mb-2">Real User Agent Generator</h1>
+                <p class="text-gray-600">Generate high-entropy user agents for real devices</p>
+            </div>
+
+            <!-- Main Card -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <!-- Device Type Selection -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Device Type</label>
+                    <div class="flex space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="deviceType" value="both" checked class="form-radio text-blue-600">
+                            <span class="ml-2">Both</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="deviceType" value="android" class="form-radio text-blue-600">
+                            <span class="ml-2">Android</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="deviceType" value="ios" class="form-radio text-blue-600">
+                            <span class="ml-2">iOS</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- User Agent Display -->
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Generated User Agent</label>
+                    <div class="relative">
+                        <textarea id="userAgent" readonly
+                            class="w-full h-24 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none resize-none bg-gray-50"
+                        ></textarea>
+                        <div class="absolute bottom-2 right-2 flex space-x-2">
+                            <span id="entropyScore" class="text-sm font-semibold px-2 py-1 rounded bg-green-100 text-green-800"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex space-x-4">
+                    <button onclick="generateUA()" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors">
+                        Generate New
+                    </button>
+                    <button onclick="copyUA()" class="flex-1 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-colors">
+                        Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Card -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Statistics</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center">
+                        <p class="text-gray-600">Android UAs Generated</p>
+                        <p id="androidCount" class="text-2xl font-bold text-blue-600">0</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-gray-600">iOS UAs Generated</p>
+                        <p id="iosCount" class="text-2xl font-bold text-blue-600">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg hidden">
+        Copied to clipboard!
+    </div>
+
+    <script>
+        async function generateUA() {
+            const deviceType = document.querySelector('input[name="deviceType"]:checked').value;
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ device_type: deviceType })
+                });
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                document.getElementById('userAgent').value = data.user_agent;
+                document.getElementById('entropyScore').textContent = `${data.entropy_score}%`;
+                document.getElementById('entropyScore').className = 
+                    `text-sm font-semibold px-2 py-1 rounded ${data.entropy_score >= 90 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
+                
+                updateStats();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to generate user agent. Please try again.');
+            }
+        }
+
+        async function updateStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                document.getElementById('androidCount').textContent = data.android;
+                document.getElementById('iosCount').textContent = data.ios;
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+            }
+        }
+
+        function copyUA() {
+            const ua = document.getElementById('userAgent');
+            ua.select();
+            document.execCommand('copy');
+            
+            // Show toast
+            const toast = document.getElementById('toast');
+            toast.classList.remove('hidden');
+            toast.classList.add('fade-in');
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('fade-in');
+            }, 2000);
+        }
+
+        // Initial generation
+        generateUA();
+        updateStats();
+    </script>
+</body>
+</html>
