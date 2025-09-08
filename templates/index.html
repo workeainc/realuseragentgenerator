@@ -11,97 +11,259 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        
+        /* Modern gradient background */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        /* Glassmorphism cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        /* Enhanced buttons */
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(108, 117, 125, 0.4);
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Enhanced textarea */
+        .enhanced-textarea {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .enhanced-textarea:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        /* Entropy score styling */
+        .entropy-excellent { background: linear-gradient(45deg, #28a745, #20c997); }
+        .entropy-good { background: linear-gradient(45deg, #ffc107, #fd7e14); }
+        .entropy-poor { background: linear-gradient(45deg, #dc3545, #e83e8c); }
+        
+        /* Dark mode styles */
+        .dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        
+        .dark-mode .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dark-mode .enhanced-textarea {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark-mode .enhanced-textarea:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #667eea;
+        }
+        
+        .dark-mode h1, .dark-mode h2, .dark-mode p {
+            color: white;
+        }
+        
+        .dark-mode label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: all 0.3s ease;
+        }
+        
+        /* Copy success animation */
+        .copy-success {
+            animation: copyPulse 0.6s ease-in-out;
+        }
+        
+        @keyframes copyPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); background: #28a745; }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="min-h-screen">
+    <!-- Dark Mode Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="darkModeToggle" class="glass-card p-3 rounded-full hover:scale-110 transition-all duration-300">
+            <span id="darkModeIcon" class="text-2xl">🌙</span>
+        </button>
+    </div>
+
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-3xl mx-auto">
             <!-- Header -->
             <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-gray-800 mb-2">Real User Agent Generator</h1>
-                <p class="text-gray-600">Generate high-entropy user agents for real devices</p>
+                <h1 class="text-5xl font-bold text-white mb-4 drop-shadow-lg">Real User Agent Generator</h1>
+                <p class="text-white/80 text-lg">Generate high-entropy user agents for real devices</p>
             </div>
 
             <!-- Main Card -->
-            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="glass-card rounded-2xl p-8 mb-6">
                 <!-- Device Type Selection -->
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">Device Type</label>
-                    <div class="flex space-x-4">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="deviceType" value="both" checked class="form-radio text-blue-600">
-                            <span class="ml-2">Both</span>
+                <div class="mb-8">
+                    <label class="block text-white text-lg font-semibold mb-4">📱 Device Type</label>
+                    <div class="flex flex-wrap gap-4">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="deviceType" value="both" checked class="form-radio text-blue-600 w-5 h-5">
+                            <span class="ml-3 text-white font-medium">Both</span>
                         </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="deviceType" value="android" class="form-radio text-blue-600">
-                            <span class="ml-2">Android</span>
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="deviceType" value="android" class="form-radio text-blue-600 w-5 h-5">
+                            <span class="ml-3 text-white font-medium">🤖 Android</span>
                         </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="deviceType" value="ios" class="form-radio text-blue-600">
-                            <span class="ml-2">iOS</span>
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="deviceType" value="ios" class="form-radio text-blue-600 w-5 h-5">
+                            <span class="ml-3 text-white font-medium">🍎 iOS</span>
                         </label>
                     </div>
                 </div>
 
                 <!-- User Agent Display -->
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2">Generated User Agent</label>
+                <div class="mb-8">
+                    <label class="block text-white text-lg font-semibold mb-4">🔗 Generated User Agent</label>
                     <div class="relative">
                         <textarea id="userAgent" readonly
-                            class="w-full h-24 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none resize-none bg-gray-50"
+                            class="w-full h-32 px-4 py-3 text-gray-800 rounded-xl focus:outline-none resize-none enhanced-textarea font-mono text-sm leading-relaxed"
                         ></textarea>
-                        <div class="absolute bottom-2 right-2 flex space-x-2">
-                            <span id="entropyScore" class="text-sm font-semibold px-2 py-1 rounded bg-green-100 text-green-800"></span>
+                        <div class="absolute bottom-3 right-3 flex items-center space-x-2">
+                            <span id="entropyScore" class="text-sm font-bold px-3 py-1 rounded-full text-white"></span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Buttons -->
-                <div class="flex space-x-4">
-                    <button onclick="generateUA()" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors">
-                        Generate New
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button id="generateBtn" onclick="generateUA()" class="flex-1 btn-primary text-white px-6 py-3 rounded-xl font-semibold text-lg hover:scale-105 transition-all duration-300 flex items-center justify-center">
+                        <span id="generateText">🎲 Generate New</span>
+                        <span id="generateLoading" class="loading hidden ml-2"></span>
                     </button>
-                    <button onclick="copyUA()" class="flex-1 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-colors">
-                        Copy to Clipboard
+                    <button id="copyBtn" onclick="copyUA()" class="flex-1 btn-secondary text-white px-6 py-3 rounded-xl font-semibold text-lg hover:scale-105 transition-all duration-300 flex items-center justify-center">
+                        📋 Copy to Clipboard
                     </button>
                 </div>
             </div>
 
             <!-- Stats Card -->
-            <div class="bg-white rounded-lg shadow-lg p-6">
-                <h2 class="text-xl font-bold text-gray-800 mb-4">Statistics</h2>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="text-center">
-                        <p class="text-gray-600">Android UAs Generated</p>
-                        <p id="androidCount" class="text-2xl font-bold text-blue-600">0</p>
+            <div class="glass-card rounded-2xl p-8">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                    📊 Statistics
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="text-center p-4 rounded-xl bg-white/10">
+                        <div class="text-4xl mb-2">🤖</div>
+                        <p class="text-white/80 text-sm mb-2">Android UAs Generated</p>
+                        <p id="androidCount" class="text-3xl font-bold text-white">0</p>
                     </div>
-                    <div class="text-center">
-                        <p class="text-gray-600">iOS UAs Generated</p>
-                        <p id="iosCount" class="text-2xl font-bold text-blue-600">0</p>
+                    <div class="text-center p-4 rounded-xl bg-white/10">
+                        <div class="text-4xl mb-2">🍎</div>
+                        <p class="text-white/80 text-sm mb-2">iOS UAs Generated</p>
+                        <p id="iosCount" class="text-3xl font-bold text-white">0</p>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Branding Footer -->
-        <div class="text-center mt-8 py-4">
-            <p class="text-gray-500 text-sm">
-                Made with ❤️ by 
-                <a href="https://www.easoftlab.com" target="_blank" rel="noopener noreferrer" 
-                   class="text-blue-600 hover:text-blue-800 transition-colors duration-200 font-medium">
-                    www.easoftlab.com
-                </a>
-            </p>
+        <!-- Enhanced Branding Footer -->
+        <div class="text-center mt-12 py-6">
+            <div class="glass-card rounded-2xl p-6 max-w-md mx-auto">
+                <p class="text-white/90 text-lg">
+                    Made with ❤️ by 
+                    <a href="https://www.easoftlab.com" target="_blank" rel="noopener noreferrer" 
+                       class="text-white font-semibold hover:text-blue-200 transition-colors duration-300 underline decoration-2 underline-offset-4">
+                        www.easoftlab.com
+                    </a>
+                </p>
+            </div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg hidden">
-        Copied to clipboard!
+    <!-- Enhanced Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 glass-card text-white px-6 py-4 rounded-xl shadow-lg hidden z-50">
+        <div class="flex items-center space-x-3">
+            <span class="text-2xl">✅</span>
+            <span class="font-semibold">Copied to clipboard!</span>
+        </div>
     </div>
 
     <script>
+        // Dark mode functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkModeIcon = document.getElementById('darkModeIcon');
+        const body = document.body;
+        
+        // Check for saved dark mode preference
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (isDarkMode) {
+            body.classList.add('dark-mode');
+            darkModeIcon.textContent = '☀️';
+        }
+        
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isNowDark = body.classList.contains('dark-mode');
+            darkModeIcon.textContent = isNowDark ? '☀️' : '🌙';
+            localStorage.setItem('darkMode', isNowDark);
+        });
+
         async function generateUA() {
+            const generateBtn = document.getElementById('generateBtn');
+            const generateText = document.getElementById('generateText');
+            const generateLoading = document.getElementById('generateLoading');
+            
+            // Show loading state
+            generateBtn.disabled = true;
+            generateText.textContent = 'Generating...';
+            generateLoading.classList.remove('hidden');
+            
             const deviceType = document.querySelector('input[name="deviceType"]:checked').value;
             try {
                 const response = await fetch('/api/generate', {
@@ -118,14 +280,30 @@
                 }
 
                 document.getElementById('userAgent').value = data.user_agent;
-                document.getElementById('entropyScore').textContent = `${data.entropy_score}%`;
-                document.getElementById('entropyScore').className = 
-                    `text-sm font-semibold px-2 py-1 rounded ${data.entropy_score >= 90 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
+                
+                // Enhanced entropy score styling
+                const entropyScore = document.getElementById('entropyScore');
+                entropyScore.textContent = `${data.entropy_score}%`;
+                
+                // Apply appropriate styling based on score
+                entropyScore.className = 'text-sm font-bold px-3 py-1 rounded-full text-white ';
+                if (data.entropy_score >= 90) {
+                    entropyScore.classList.add('entropy-excellent');
+                } else if (data.entropy_score >= 70) {
+                    entropyScore.classList.add('entropy-good');
+                } else {
+                    entropyScore.classList.add('entropy-poor');
+                }
                 
                 updateStats();
             } catch (error) {
                 console.error('Error:', error);
                 alert('Failed to generate user agent. Please try again.');
+            } finally {
+                // Hide loading state
+                generateBtn.disabled = false;
+                generateText.textContent = '🎲 Generate New';
+                generateLoading.classList.add('hidden');
             }
         }
 
@@ -143,10 +321,18 @@
 
         function copyUA() {
             const ua = document.getElementById('userAgent');
+            const copyBtn = document.getElementById('copyBtn');
+            
             ua.select();
             document.execCommand('copy');
             
-            // Show toast
+            // Add copy success animation
+            copyBtn.classList.add('copy-success');
+            setTimeout(() => {
+                copyBtn.classList.remove('copy-success');
+            }, 600);
+            
+            // Show enhanced toast
             const toast = document.getElementById('toast');
             toast.classList.remove('hidden');
             toast.classList.add('fade-in');
@@ -154,10 +340,12 @@
             setTimeout(() => {
                 toast.classList.add('hidden');
                 toast.classList.remove('fade-in');
-            }, 2000);
+            }, 3000);
             
             // Generate new UA after copying
-            generateUA();
+            setTimeout(() => {
+                generateUA();
+            }, 1000);
         }
 
         // Initial generation
