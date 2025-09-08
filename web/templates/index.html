@@ -4,6 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real User Agent Generator</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    
+    <!-- Simple Visitor Counter -->
+    <script>
+        // Track page views
+        function trackPageView() {
+            fetch('/api/track-visit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).catch(err => console.log('Analytics error:', err));
+        }
+        
+        // Track user agent generations
+        function trackGeneration(deviceType) {
+            fetch('/api/track-generation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ device_type: deviceType })
+            }).catch(err => console.log('Analytics error:', err));
+        }
+        
+        // Track copy actions
+        function trackCopy() {
+            fetch('/api/track-copy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).catch(err => console.log('Analytics error:', err));
+        }
+    </script>
+    
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .fade-in { animation: fadeIn 0.3s ease-in; }
@@ -296,6 +340,9 @@
                 }
                 
                 updateStats();
+                
+                // Track generation
+                trackGeneration(data.device_type);
             } catch (error) {
                 console.error('Error:', error);
                 alert('Failed to generate user agent. Please try again.');
@@ -337,6 +384,9 @@
             toast.classList.remove('hidden');
             toast.classList.add('fade-in');
             
+            // Track copy action
+            trackCopy();
+            
             setTimeout(() => {
                 toast.classList.add('hidden');
                 toast.classList.remove('fade-in');
@@ -351,6 +401,9 @@
         // Initial generation
         generateUA();
         updateStats();
+        
+        // Track page view
+        trackPageView();
     </script>
 </body>
 </html>

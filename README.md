@@ -4,17 +4,25 @@
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
 ![Entropy](https://img.shields.io/badge/entropy-90%2B-brightgreen)
+![Live Site](https://img.shields.io/badge/live%20site-online-brightgreen)
+
+## 🌐 **[Try It Live!](https://realuseragentgenerator.onrender.com/)**
 
 A sophisticated User Agent generator that creates high-entropy, realistic user agents for Android and iOS devices. Built with a focus on authenticity and uniqueness, this tool ensures each generated user agent maintains an entropy score above 90%.
+
+**✨ Now featuring a modern glassmorphism UI with dark mode support!**
 
 ## 🌟 Features
 
 - **High Entropy Generation**: Every user agent has 90%+ entropy score
 - **Real Device Simulation**: Only uses actual, current market devices
-- **Modern UI**: Clean, intuitive graphical interface
+- **Modern Glassmorphism UI**: Beautiful, modern interface with dark mode
 - **Instant Clipboard Integration**: One-click copy functionality
 - **Smart Duplication Prevention**: Tracks and prevents duplicate user agents
 - **Real-time Entropy Scoring**: Visual feedback on user agent quality
+- **Loading Animations**: Smooth user experience with visual feedback
+- **Mobile Responsive**: Works perfectly on all devices
+- **Dark Mode Toggle**: User preference with persistent settings
 
 ## 📱 Supported Devices
 
@@ -39,16 +47,18 @@ A sophisticated User Agent generator that creates high-entropy, realistic user a
 
 ## 🚀 Quick Start
 
-### Installation
+### 🌐 **Web Version (Recommended)**
+1. Visit **[https://realuseragentgenerator.onrender.com/](https://realuseragentgenerator.onrender.com/)**
+2. Select device type (Android/iOS/Both)
+3. Click "🎲 Generate New" for a fresh user agent
+4. Click "📋 Copy to Clipboard" to use
+5. Toggle dark mode with the 🌙 button
+6. Only high-entropy (90%+) agents are displayed
+
+### 💻 **Desktop Version**
 1. Download the latest release
 2. Run the executable
 3. No installation or Python required!
-
-### Usage
-1. Select device type (Android/iOS/Both)
-2. Click "Generate New" for a fresh user agent
-3. Click "Copy to Clipboard" to use
-4. Only high-entropy (90%+) agents are displayed
 
 ## 🛠️ Technical Details
 
