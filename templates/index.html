@@ -6,9 +6,7 @@
     <title>Real User Agent Generator</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
-        }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -157,6 +155,9 @@
                 toast.classList.add('hidden');
                 toast.classList.remove('fade-in');
             }, 2000);
+            
+            // Generate new UA after copying
+            generateUA();
         }
 
         // Initial generation
