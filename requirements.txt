@@ -5,3 +5,4 @@ click==8.1.7
 faker==19.13.0
 flask-cors==4.0.0
 flask-limiter==3.5.0
+tqdm==4.66.1
